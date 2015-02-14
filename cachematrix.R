@@ -7,7 +7,7 @@
 # How to Use:
 #   b <- matrix(c(1,1,1,0), nrow=2, ncol=2)   # create sample matrix
 #   c <- makeCacheMatrix(b)                   # wrap it into a CacheMatrix
-#   cacheSolve(c)                             # first time calculates + caches
+#   cacheSolve(c)                             # first time computes + caches
 #   cacheSolve(c)                             # subsequent are from cache
 #############################################################################
 
@@ -40,6 +40,7 @@ makeCacheMatrix <- function(x = matrix()) {
 cacheSolve <- function(x, ...) {
 	inverse <- x$getInverse()
 	if ( is.null(inverse) ) {
+		# cache miss - compute, cache, and return
 		data <- x$get()
 		inverse <- solve(data, ...)
 		x$setInverse(inverse)
